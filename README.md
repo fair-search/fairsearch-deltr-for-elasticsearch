@@ -1,0 +1,1 @@
+# fairsearchdeltr-elasticsearch-plugin

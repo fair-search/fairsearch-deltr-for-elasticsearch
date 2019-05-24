@@ -1,0 +1,368 @@
+{
+  "featureset": {
+    "features": [
+      {
+        "name": "1",
+        "params": [
+          "keywords"
+        ],
+        "template_language": "mustache",
+        "template": {
+          "function_score": {
+            "script_score": {
+              "script": {
+                "source": "doc['gender.keyword'].value == 'MALE' ? 1 : 0"
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "2",
+        "params": [
+          "keywords"
+        ],
+        "template_language": "mustache",
+        "template": {
+          "multi_match": {
+            "query": "{{keywords}}",
+            "fields": [
+              "mails.body",
+              "mails.email",
+              "mails.subject"
+            ]
+          }
+        }
+      },
+      {
+        "name": "3",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "unique_terms_count",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "4",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "min_raw_df",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "5",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "max_raw_df",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "6",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "stddev_raw_df",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "7",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "sum_raw_df",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "8",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "min_classic_idf",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "9",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "max_classic_idf",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "10",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "stddev_classic_idf",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "11",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "sum_classic_idf",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "12",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "min_raw_ttf",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "13",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "max_raw_ttf",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "14",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "stddev_raw_ttf",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "15",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "sum_raw_ttf",
+            "query": {
+              "multi_match": {
+                "query": "{{keywords}}",
+                "fields": [
+                  "mails.body",
+                  "mails.email",
+                  "mails.subject"
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "16",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "unique_terms_count",
+            "query": {
+              "match": {
+                "mails.body": "{{keywords}}"
+              }
+            }
+          }
+        }
+      },
+      {
+        "name": "17",
+        "params": [
+          "keywords"
+        ],
+        "template_language": "mustache",
+        "template": {
+          "match": {
+            "mails.body": "{{keywords}}"
+          }
+        }
+      },
+      {
+        "name": "18",
+        "params": [
+          "keywords"
+        ],
+        "template_language": "mustache",
+        "template": {
+          "match": {
+            "mails.subject": "{{keywords}}"
+          }
+        }
+      },
+      {
+        "name": "19",
+        "params": [
+          "keywords"
+        ],
+        "template": {
+          "match_explorer": {
+            "type": "unique_terms_count",
+            "query": {
+              "match": {
+                "mails.subject": "{{keywords}}"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

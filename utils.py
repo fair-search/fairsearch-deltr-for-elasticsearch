@@ -23,6 +23,8 @@ FEATURE_SET_FILE = config[config_set]['FeatureSetNameFile']
 JUDGMENTS_FILE_FEATURES = config[config_set]['JudgmentsFileWithFeature']
 INDEX_NAME = config[config_set]['IndexName']
 MODEL_FILE = config[config_set]['ModelFile']
+MODEL_NAME = config[config_set]['ModelName']
+DOCUMENT_DIR = config[config_set]['DocumentDir']
 
 
 def elastic_connection(url=None, timeout=1000, http_auth=auth):

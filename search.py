@@ -1,4 +1,4 @@
-from utils import Logger, elastic_connection, INDEX_NAME
+from utils import Logger, elastic_connection, INDEX_NAME, MODEL_NAME
 
 baseQuery = {
   "query": {
@@ -34,7 +34,7 @@ if __name__ == "__main__":
     from sys import argv
 
     es = elastic_connection(timeout=1000)
-    model = "deltr_vanilla"
+    model = MODEL_NAME
     if len(argv) > 2:
         model = argv[2]
     results = es.search(index=INDEX_NAME, doc_type='_doc', body=ltr_query(argv[1], model))

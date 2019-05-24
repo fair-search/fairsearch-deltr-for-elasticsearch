@@ -36,7 +36,7 @@ def train_model(judgments_with_features_file: str, model_output: str,
 
     Logger.logger.info("*** Saving model")
     with(open(model_output, 'w')) as f:
-        f.write("## Linear Regression # DELTR\n")
+        f.write("## Linear Regression\n")
         f.write("## Lamda = %s\n" % dtr._lambda)
         f.write("0:%s" % model[-1])
         for i,w in enumerate(model[:-1]):

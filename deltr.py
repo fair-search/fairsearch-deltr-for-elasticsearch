@@ -101,9 +101,9 @@ if __name__ == "__main__":
     elif args.index:
         index(None, None)
     elif args.train:
-        train(args.feature_set_name, args.model, \
-          args.judgements, args.model_file, \
-          args.protected_feature, args.gamma, args.number_of_iterations, args.learning_rate, \
+        train(args.feature_set_name, args.model,
+          args.judgements, args.model_file,
+          args.protected_feature, args.gamma, args.number_of_iterations, args.learning_rate,
           args.lambdaa, args.init_var, args.standardize)
     elif args.search:
         search(args.index_name, args.query, args.model)

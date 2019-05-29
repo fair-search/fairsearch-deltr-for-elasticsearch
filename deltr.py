@@ -4,15 +4,24 @@ import argparse
 from utils import Logger, elastic_connection, FEATURE_SET_FILE, JUDGMENTS_FILE_FEATURES, \
     FEATURE_SET_NAME, MODEL_FILE, INDEX_NAME, ES_AUTH, ES_HOST, DOCUMENT_DIR, MODEL_NAME
 from prepare import load_features, init_default_store
+from index import create_document_list, reindex
 from train import save_model, train_model
 from search import ltr_query
 
 
 def index(index_name, document_dir):
-    pass
+    """
+    Index the data
+    :param index_name:          Name of the created index
+    :param document_dir:        Path to the directory containing the JSONs to be uploaded. Each JSON :must: have an "id".
+    :return:
+    """
+    es = elastic_connection(timeout=30)
+    reindex(es, document_list=create_document_list(document_dir), index=index_name)
 
 
 def prepare(feature_set_file, feature_set_name):
+    """ Upload the feature set"""
     init_default_store()
     load_features(feature_set_file, feature_set_name)
 
@@ -67,7 +76,7 @@ if __name__ == "__main__":
     # add index arguments
     parser.add_argument('--index-name', required=False, default=INDEX_NAME,
                         help='The name of the index to create or run a query on.')
-    parser.add_argument('--doc-dir', required=False, default=DOCUMENT_DIR,
+    parser.add_argument('--document-dir', required=False, default=DOCUMENT_DIR,
                         help='The directory with documents to index.')
 
     # add train arguments
@@ -97,6 +106,7 @@ if __name__ == "__main__":
     parser.add_argument('-q', '--query', required=False, default="Test",
                         help='The keywords to run the query on.')
 
+    # parse the arguments
     args = None
     try:
         args = parser.parse_args()
@@ -104,10 +114,11 @@ if __name__ == "__main__":
         parser.print_help()
         exit(-1)
 
+    # run a command based on the arguments
     if args.prepare:
         prepare(args.feature_set_file, args.feature_set_name)
     elif args.index:
-        index(None, None)
+        index(args.index_name, args.document_dir)
     elif args.train:
         train(args.feature_set_name, args.model,
           args.judgements, args.model_file,

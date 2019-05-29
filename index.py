@@ -21,6 +21,7 @@ def create_document_list(document_dir=DOCUMENT_DIR):
 
 
 def reindex(es_connection, analysis_settings=None, mapping_settings=None, document_list=None, index=INDEX_NAME):
+    """ Index/reindex the documents."""
     if document_list is None:
         document_list = {}
     if mapping_settings is None:
@@ -42,7 +43,7 @@ def reindex(es_connection, analysis_settings=None, mapping_settings=None, docume
     es_connection.indices.delete(index, ignore=[400, 404])
     es_connection.indices.create(index, body=settings)
 
-    elasticsearch.helpers.bulk(es, bulk_docs(document_list, index))
+    elasticsearch.helpers.bulk(es_connection, bulk_docs(document_list, index))
 
 
 def bulk_docs(document_list, index):

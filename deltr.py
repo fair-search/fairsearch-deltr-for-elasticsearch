@@ -41,17 +41,22 @@ def search(index_name, query, model):
     es = elastic_connection(timeout=1000)
     results = es.search(index=index_name, body=ltr_query(query, model))
     for result in results['hits']['hits']:
-        Logger.logger.info(result['_source']['title'])
+        Logger.logger.info(result['_source']['id'])
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Read command line arguments for DELTR LTR integration.')
 
     # add main commands
-    parser.add_argument('--prepare', action='store_true')
-    parser.add_argument('--index', action='store_true')
-    parser.add_argument('--train', action='store_true')
-    parser.add_argument('--search', action='store_true')
+    parser.add_argument('--prepare', action='store_true',
+                        help='Command to upload the feature set.')
+    parser.add_argument('--index', action='store_true',
+                        help='Command to index the data.')
+    parser.add_argument('--train', action='store_true',
+                        help='Command to train the model')
+    parser.add_argument('--search', action='store_true',
+                        help='Command to make a search query.')
+
 
     # add prepare arguments
     parser.add_argument('--feature-set-file', required=False, default=FEATURE_SET_FILE,
@@ -60,8 +65,8 @@ if __name__ == "__main__":
                         help='The features set name.')  # this is used in the train phase as well
 
     # add index arguments
-    parser.add_argument('--name', required=False, default=INDEX_NAME,
-                        help='The name of the index to create.')
+    parser.add_argument('--index-name', required=False, default=INDEX_NAME,
+                        help='The name of the index to create or run a query on.')
     parser.add_argument('--doc-dir', required=False, default=DOCUMENT_DIR,
                         help='The directory with documents to index.')
 
@@ -91,10 +96,13 @@ if __name__ == "__main__":
     # add search arguments
     parser.add_argument('-q', '--query', required=False, default="Test",
                         help='The keywords to run the query on.')
-    parser.add_argument('--index-name', required=False, default=INDEX_NAME,
-                        help='The name of the index to run the query on.')
 
-    args = parser.parse_args()
+    args = None
+    try:
+        args = parser.parse_args()
+    except:
+        parser.print_help()
+        exit(-1)
 
     if args.prepare:
         prepare(args.feature_set_file, args.feature_set_name)

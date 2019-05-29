@@ -1,12 +1,28 @@
 import json
 import elasticsearch.helpers
 
-from utils import Logger, elastic_connection, INDEX_NAME
+from os import listdir
+from os.path import isfile, join
+
+from utils import Logger, elastic_connection, INDEX_NAME, DOCUMENT_DIR
 
 
-def reindex(es_connection, analysis_settings=None, mapping_settings=None, movie_dict=None, index=INDEX_NAME):
-    if movie_dict is None:
-        movie_dict = {}
+def create_document_list(document_dir=DOCUMENT_DIR):
+    """ returns a list of JSON files in the directory """
+
+    for f in listdir(document_dir):
+        if isfile(join(document_dir, f)) and f.endswith(".json"):
+            try:
+                with open(join(document_dir, f)) as f_json:
+                    yield json.load(f_json)
+            except Exception as e:
+                Logger.logger.info("Failed to parse %s due to %s" % (f, str(e)))
+                continue
+
+
+def reindex(es_connection, analysis_settings=None, mapping_settings=None, document_list=None, index=INDEX_NAME):
+    if document_list is None:
+        document_list = {}
     if mapping_settings is None:
         mapping_settings = {}
     if analysis_settings is None:
@@ -26,22 +42,21 @@ def reindex(es_connection, analysis_settings=None, mapping_settings=None, movie_
     es_connection.indices.delete(index, ignore=[400, 404])
     es_connection.indices.create(index, body=settings)
 
-    elasticsearch.helpers.bulk(es, bulk_docs(movie_dict, index))
+    elasticsearch.helpers.bulk(es, bulk_docs(document_list, index))
 
 
-def bulk_docs(movie_dict, index):
-    for movie_id, movie in movie_dict.items():
-        if 'release_date' in movie and movie['release_date'] == "":
-            del movie['release_date']
+def bulk_docs(document_list, index):
+    """ bulk index the documents """
+    for document in document_list:
         add_cmd = {"_index": index,  # E
-                   "_id": movie_id,
-                   "_source": movie}
+                   "_id": document.get("id", None),
+                   "_type": "_doc",
+                   "_source": document}
         yield add_cmd
-        if 'title' in movie:
-            Logger.logger.info("%s added to %s" % (movie['title'].encode('utf-8'), index))
+        if 'id' in document:
+            Logger.logger.info("%s added to %s" % (document['id'].encode('utf-8'), index))
 
 
 if __name__ == "__main__":
     es = elastic_connection(timeout=30)
-    tmdb_movie_dict = json.loads(open('tmdb.json').read())
-    reindex(es, movie_dict=tmdb_movie_dict)
+    reindex(es, document_list=create_document_list(DOCUMENT_DIR))

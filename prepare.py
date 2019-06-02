@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 
 def load_features(feature_set_file: str, feature_set_name: str):
     """
-    Obtain all found features from the filesystem and store them into elasticsearch using the provided name of the
+    Obtain all found features from the filesystem and store them into Elasticsearch using the provided name of the
     feature set.
     :param feature_set_file:            the file path where the feature JSON is stored
     :param feature_set_name:            name of the feature set to use

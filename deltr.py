@@ -1,12 +1,12 @@
-import sys
 import argparse
+import sys
 
-from utils import Logger, elastic_connection, FEATURE_SET_FILE, JUDGMENTS_FILE, QUERIES_FILE, \
-    FEATURE_SET_NAME, MODEL_FILE, INDEX_NAME, ES_AUTH, ES_HOST, DOCUMENT_DIR, MODEL_NAME, FEATURES_FILE
-from prepare import load_features, init_default_store
 from index import create_document_list, reindex
-from train import save_model, train_model, collect_train_data
+from prepare import load_features, init_default_store
 from search import ltr_query
+from train import save_model, train_model, collect_train_data
+from utils import Logger, elastic_connection, FEATURE_SET_FILE, JUDGMENTS_FILE, QUERIES_FILE, \
+    FEATURE_SET_NAME, MODEL_FILE, INDEX_NAME, DOCUMENT_DIR, MODEL_NAME, FEATURES_FILE
 
 
 def index(index_name, document_dir):
@@ -21,7 +21,12 @@ def index(index_name, document_dir):
 
 
 def prepare(feature_set_file, feature_set_name):
-    """ Upload the feature set"""
+    """
+    Upload the feature set
+    :param feature_set_file:        The file path to the feature set JSON definition
+    :param feature_set_name:        The name of the feature set
+    :return:
+    """
     init_default_store()
     load_features(feature_set_file, feature_set_name)
 

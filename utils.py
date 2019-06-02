@@ -1,7 +1,7 @@
-import logging.config
 import configparser
-import elasticsearch
+import logging.config
 
+import elasticsearch
 from requests.auth import HTTPBasicAuth
 
 config = configparser.ConfigParser()

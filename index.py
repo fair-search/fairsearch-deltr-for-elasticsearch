@@ -1,8 +1,8 @@
 import json
-import elasticsearch.helpers
-
 from os import listdir
 from os.path import isfile, join
+
+import elasticsearch.helpers
 
 from utils import Logger, elastic_connection, INDEX_NAME, DOCUMENT_DIR
 

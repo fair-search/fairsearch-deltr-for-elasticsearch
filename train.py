@@ -1,10 +1,10 @@
-import pandas as pd
 import json
 
+import pandas as pd
 from fairsearchdeltr import Deltr
-from prepare import init_default_store, load_features
+
 from utils import Logger, elastic_connection, ES_HOST, ES_AUTH, JUDGMENTS_FILE, \
-    FEATURE_SET_NAME, MODEL_FILE, MODEL_NAME, QUERIES_FILE, FEATURES_FILE, INDEX_NAME
+    FEATURE_SET_NAME, MODEL_FILE, QUERIES_FILE, FEATURES_FILE, INDEX_NAME
 
 log_query = {
   "size": 1000,
@@ -169,12 +169,8 @@ def save_model(script_name, feature_set, model_fname):
 if __name__ == "__main__":
     es = elastic_connection(timeout=1000)
 
-    # Load features into Elasticsearch
-    # init_default_store()
-    # load_features(FEATURE_SET_NAME)
-
-    # Train as ranklib type; DELTR is actually - (9) Linear Regression
-    # Logger.logger.info("*** Training DELTR ")
+    # Train DELTR and store as linear regression type
+    Logger.logger.info("*** Training DELTR ")
 
     collect_train_data(es, QUERIES_FILE, JUDGMENTS_FILE, FEATURE_SET_NAME, INDEX_NAME, FEATURES_FILE)
     train_model(features_file=FEATURES_FILE, model_output=MODEL_FILE)

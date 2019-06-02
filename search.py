@@ -1,24 +1,34 @@
 from utils import Logger, elastic_connection, INDEX_NAME, MODEL_NAME
 
 baseQuery = {
-  "query": {
-      "multi_match": {
-          "query": "w3c",
-       }
-   },
-  "rescore": {
-      "query": {
-        "rescore_query": {
-            "sltr": {
-                "params": {
-                    "keywords": ""
-                },
-                "model": "",
+    "query": {
+        "multi_match": {
+            "query": "w3c",
+        }
+    },
+    "rescore": {
+        "query": {
+            "rescore_query": {
+                "sltr": {
+                    "params": {
+                        "keywords": ""
+                    },
+                    "model": "",
+                }
             }
-         }
-      }
-   }
+        },
+    }
 }
+
+# "ext": {
+#             "ltr_log": {
+#                 "log_specs": {
+#                     "name": "log_entry",
+#                     "rescore_index ": 0,
+#                     "missing_as_zero": True
+#                 }
+#             }
+#         }
 
 
 def ltr_query(keywords, model_name):
@@ -37,7 +47,7 @@ if __name__ == "__main__":
     model = MODEL_NAME
     if len(argv) > 2:
         model = argv[2]
-    results = es.search(index=INDEX_NAME, doc_type='_doc', body=ltr_query(argv[1], model))
+    results = es.search(index=INDEX_NAME, body=ltr_query(argv[1], model))
     for result in results['hits']['hits']:
-        Logger.logger.info(result['_source']['title'])
+        Logger.logger.info(result['_source']['name'])
 

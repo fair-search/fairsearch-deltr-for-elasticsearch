@@ -20,9 +20,11 @@ else:
 
 FEATURE_SET_NAME = config[config_set]['FeatureSetName']
 FEATURE_SET_FILE = config[config_set]['FeatureSetNameFile']
-JUDGMENTS_FILE_FEATURES = config[config_set]['JudgmentsFileWithFeature']
+JUDGMENTS_FILE = config[config_set]['JudgmentsFile']
+QUERIES_FILE = config[config_set]['QueriesFile']
 INDEX_NAME = config[config_set]['IndexName']
 MODEL_FILE = config[config_set]['ModelFile']
+FEATURES_FILE = config[config_set]['FeaturesFile']
 MODEL_NAME = config[config_set]['ModelName']
 DOCUMENT_DIR = config[config_set]['DocumentDir']
 

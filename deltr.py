@@ -46,18 +46,23 @@ def train(feature_set_name: str, model_name: str, queries_file: str, judgments_f
     save_model(model_name, feature_set_name, model_output)
 
 
-def search(index_name, query, model):
+def search(index_name, query, model, verbose):
     """
     Peforms a search request on Elasticseach using LTR and a specified (DELTR) model
-    :param index_name:       The index to search on
-    :param query:       The query to search by
-    :param model:       The model to search with
+    :param index_name:      The index to search on
+    :param query:           The query to search by
+    :param model:           The model to search with
+    :param verbose:         Whether or not the output should contain the weights
     :return:
     """
     es = elastic_connection(timeout=1000)
     results = es.search(index=index_name, body=ltr_query(query, model))
     for result in results['hits']['hits']:
-        Logger.logger.info(result['_source']['id'])
+        message = result['_source']['id']
+        if verbose:
+            features = result['fields']['_ltrlog'][0]['log_entry']
+            message += ' ' + ' '.join(['{0}:{1}'.format(ll['name'], ll['value']) for ll in features])
+        Logger.logger.info(message)
 
 
 if __name__ == "__main__":
@@ -140,7 +145,8 @@ if __name__ == "__main__":
               args.protected_feature, args.gamma, args.number_of_iterations, args.learning_rate,
               args.lambdaa, args.init_var, args.standardize)
     elif args.search:
-        search(args.index_name, args.query, args.model)
+        verbose = True if args.verbose else False
+        search(args.index_name, args.query, args.model, verbose)
     else:
         parser.print_help(sys.stderr)
         sys.exit(1)

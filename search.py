@@ -17,18 +17,17 @@ baseQuery = {
                 }
             }
         },
+    },
+    "ext": {
+        "ltr_log": {
+            "log_specs": {
+                "name": "log_entry",
+                "rescore_index": 0,
+                "missing_as_zero": True
+            }
+        }
     }
 }
-
-# "ext": {
-#             "ltr_log": {
-#                 "log_specs": {
-#                     "name": "log_entry",
-#                     "rescore_index ": 0,
-#                     "missing_as_zero": True
-#                 }
-#             }
-#         }
 
 
 def ltr_query(keywords, model_name):

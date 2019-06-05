@@ -19,9 +19,9 @@ This library requires:
 
 There are several steps you need to take.
 
-### Index the data
+### Index the training corpus
 
-Index the data you want to search through. We have a sample data set in `zip` files `/data/candidates/candidates*.zip`.
+Index the training corpus. We have a sample data set in `zip` files `/data/candidates/candidates*.zip`.
 Make sure to unzip them first. Then, you can index them with:
 
 ```bash
@@ -29,6 +29,8 @@ python deltr.py --index --document-dir ./data/candidates --index-name resumes
 ```
 
 This will (re)index the `JSON` files under the folder `/data/candidates` in an index named `resumes`. 
+
+Later, at any point, you can add the real documents over which you want to search using the trained ranking model. Those documents do not need to be in the same index, most commonly they will be in a different index.
 
 ### Setup the features
 
@@ -54,7 +56,7 @@ python deltr.py --train --queries ./data/queries.csv --judgements ./data/judgeme
 This is going to train a DELTR model (with default parameters) name `deltr_vanilla` using the questions in `/data/queries.csv` and 
 judgements for those queries in `/data/judgements.csv`, with the features defined in the feature set name `w3c`
 
-#### In case you want to debug
+#### Debugging the model by observing the feature values
 
 The library will use the features we defined in LTR to train the model. So, for debugging purposes, the library 
 creates a `features.csv` file in the same folder where this is executed. There you can see what features were generated for each document.

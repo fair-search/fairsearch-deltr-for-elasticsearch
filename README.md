@@ -21,13 +21,59 @@ There are several steps you need to take.
 
 ### Setup the features
 
-Create the features you want to use in LTR. We have created sample features in 
+Create the features you want to use in LTR. We have created sample features in `/data/features.json`
+Next, we need to upload these features to ElasticSearch.
+
+```bash
+python deltr.py --prepare --feature-set-file ./data/features.json --feature-set-name w3c
+```
+
+This will upload the features defined in `/data/features.json` in ElasticSearch under the name `w3c`.
 
 ### Index the data
 
+Index the data you want to search through. We have a sample data set in `zip` files `/data/candidates/candidates*.zip`.
+Make sure to unzip them first. Then, you can index them with:
+
+```bash
+python deltr.py --index --document-dir ./data/candidates --index-name resumes
+```
+
+This will (re)index the `JSON` files under the folder `/data/candidates` in an index named `resumes`. 
+
 ### Train the model
 
+After, we have defined and uploaded the features and indexed the data, we can now create a model to use for retrireval.
+In order to build a DELTR model, we need to provide it with some training data. We have created a sample train set contained in two files:
+ `/data/queries.csv` and `/data/judgements.csv`. You can run the model
+ 
+```bash
+python deltr.py --train --queries ./data/queries.csv --judgements ./data/judgements.csv --model deltr_vanilla
+```
+
+This is going to train a DELTR model (with default parameters) name `deltr_vanilla` using the questions in `/data/queries.csv` and 
+judgements for those queries in `/data/judgements.csv`.
+
+*Note:* You can specify tuning parameters from the command line as well. E.g.
+
+```bash
+python deltr.py --train --queries ./data/queries.csv --judgements ./data/judgements.csv --model deltr_not_vanilla --gamma 0.8
+```
+
+This will create a new model with the same files, only it will set the `gamma` parameter to 0.8. [Here](#options) you can see how to check all options.
+
 ### Search with the model
+
+```bash
+
+```
+
+## <a name="options"></a> All options
+
+Run the following command to get the full options list
+```bash
+python deltr.py --help
+```
 
 ## Development
 

@@ -1,4 +1,4 @@
-# Fair search DELTR for Python
+# Fair search DELTR for ElasticSearch
 
 [![image](https://img.shields.io/pypi/pyversions/fairsearchdeltr.svg)](https://pypi.org/project/fairsearchdeltr/)
 [![image](https://img.shields.io/pypi/l/fairsearchdeltr.svg)](https://pypi.org/project/fairsearchdeltr/)
@@ -12,10 +12,22 @@ This library requires:
 
 - `Python 3.4+`
     - `Python` dependencies are stored in the `requirements.txt` file 
-- `ElasticSearch` and _Learning to rank plugin_ for `ElasticSearch`
+- `ElasticSearch` and _Learning to rank plugin_ (LTR) for `ElasticSearch`
     - Start a for supported version of `ElasticSarch` and follow the [installation steps](https://github.com/o19s/elasticsearch-learning-to-rank#installing)  
 
-## Us
+## Usage
+
+There are several steps you need to take.
+
+### Setup the features
+
+Create the features you want to use in LTR. We have created sample features in 
+
+### Index the data
+
+### Train the model
+
+### Search with the model
 
 ## Development
 

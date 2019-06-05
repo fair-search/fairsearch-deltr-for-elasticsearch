@@ -13,7 +13,7 @@ This library requires:
 - `Python 3.4+`
     - `Python` dependencies are stored in the `requirements.txt` file 
 - `ElasticSearch` and _Learning to rank plugin_ (LTR) for `ElasticSearch`
-    - Start a for supported version of `ElasticSarch` and follow the [installation steps](https://github.com/o19s/elasticsearch-learning-to-rank#installing)  
+    - Start a supported version of `ElasticSarch` and follow the [installation steps](https://github.com/o19s/elasticsearch-learning-to-rank#installing)  
 
 ## Usage
 

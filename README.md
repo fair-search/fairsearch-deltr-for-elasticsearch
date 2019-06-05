@@ -54,7 +54,13 @@ python deltr.py --train --queries ./data/queries.csv --judgements ./data/judgeme
 This is going to train a DELTR model (with default parameters) name `deltr_vanilla` using the questions in `/data/queries.csv` and 
 judgements for those queries in `/data/judgements.csv`.
 
-*Note:* You can specify tuning parameters from the command line as well. E.g.
+#### In case you want to debug
+
+The library will use the features we defined in LTR to train the model. So, for debugging purposes, the library 
+creates a `features.csv` file in the same folder where this is executed. There you can see what features were generated for each document.
+It also creates a `model.txt` where you can see the final model, that was uploaded in LTR. 
+
+*Note:* You can also specify tuning parameters from the command line as well. E.g.
 
 ```bash
 python deltr.py --train --queries ./data/queries.csv --judgements ./data/judgements.csv --model deltr_not_vanilla --gamma 0.8
@@ -64,8 +70,18 @@ This will create a new model with the same files, only it will set the `gamma` p
 
 ### Search with the model
 
-```bash
+Once we have the model, we can start using to do some searches. 
 
+```bash
+python3 deltr.py --search --query html --model deltr_vanilla --index-name resumes
+```
+
+This will run a query with the keyword `html` using the model `deltr_vanilla` on the index `resumes`.
+
+*Note:* You can also see a verbose output, which will contain the features calculated for each document returned.
+
+```bash
+python3 deltr.py --search --query html --model deltr_vanilla --index-name resumes --verbose
 ```
 
 ## <a name="options"></a> All options

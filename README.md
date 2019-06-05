@@ -48,11 +48,11 @@ In order to build a DELTR model, we need to provide it with some training data. 
  `/data/queries.csv` and `/data/judgements.csv`. You can run the model
  
 ```bash
-python deltr.py --train --queries ./data/queries.csv --judgements ./data/judgements.csv --model deltr_vanilla
+python deltr.py --train --queries ./data/queries.csv --judgements ./data/judgements.csv --model deltr_vanilla --feature-set-name w3c
 ```
 
 This is going to train a DELTR model (with default parameters) name `deltr_vanilla` using the questions in `/data/queries.csv` and 
-judgements for those queries in `/data/judgements.csv`.
+judgements for those queries in `/data/judgements.csv`, with the features defined in the feature set name `w3c`
 
 #### In case you want to debug
 

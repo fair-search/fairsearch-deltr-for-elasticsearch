@@ -63,7 +63,7 @@ It also creates a `model.txt` where you can see the final model, that was upload
 *Note:* You can also specify tuning parameters from the command line as well. E.g.
 
 ```bash
-python deltr.py --train --queries ./data/queries.csv --judgements ./data/judgements.csv --model deltr_not_vanilla --gamma 0.8
+python deltr.py --train --queries ./data/queries.csv --judgements ./data/judgements.csv --model deltr_not_vanilla --feature-set-name w3c --gamma 0.8
 ```
 
 This will create a new model with the same files, only it will set the `gamma` parameter to 0.8. [Here](#options) you can see how to check all options.

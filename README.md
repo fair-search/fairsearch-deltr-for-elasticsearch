@@ -17,7 +17,7 @@ This library requires:
 
 ## Usage
 
-There are several steps you need to take.
+There are several steps you need to take. In the following, we describe how to use the adapter to search on a collection of e-mails from W3C, included in /data/, which is one of the examples we used in the paper (see bibliography below).
 
 ### Index the training corpus
 

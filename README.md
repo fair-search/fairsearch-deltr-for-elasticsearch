@@ -1,10 +1,27 @@
 # Fair search DELTR for Python
 
+[![image](https://img.shields.io/pypi/pyversions/fairsearchdeltr.svg)](https://pypi.org/project/fairsearchdeltr/)
+[![image](https://img.shields.io/pypi/l/fairsearchdeltr.svg)](https://pypi.org/project/fairsearchdeltr/)
+
 This is the Python library that serves as wrapper for the [DELTR](https://arxiv.org/pdf/1805.08716.pdf) model 
 for fair ranking in [ElasticSearch](https://www.elastic.co/) with the [Learning to Rank plugin](https://elasticsearch-learning-to-rank.readthedocs.io/en/latest/).
 
 ## Requirements
 
+This library requires:
+
+- `Python 3.4+`
+    - `Python` dependencies are stored in the `requirements.txt` file 
+- `ElasticSearch` and _Learning to rank plugin_ for `ElasticSearch`
+    - Start a for supported version of `ElasticSarch` and follow the [installation steps](https://github.com/o19s/elasticsearch-learning-to-rank#installing)  
+
+## Us
+
+## Development
+
+1. Clone this repository `git clone https://github.com/fair-search/fairsearch-deltr-for-elasticsearch`
+2. Change directory to the directory where you cloned the repository `cd WHERE_ITS_DOWNLOADED/fairsearch-deltr-for-elasticsearch`
+3. Use any IDE to work with the code
 
 ## Credits
 

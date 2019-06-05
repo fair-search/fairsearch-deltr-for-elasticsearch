@@ -19,17 +19,6 @@ This library requires:
 
 There are several steps you need to take.
 
-### Setup the features
-
-Create the features you want to use in LTR. We have created sample features in `/data/features.json`
-Next, we need to upload these features to ElasticSearch.
-
-```bash
-python deltr.py --prepare --feature-set-file ./data/features.json --feature-set-name w3c
-```
-
-This will upload the features defined in `/data/features.json` in ElasticSearch under the name `w3c`.
-
 ### Index the data
 
 Index the data you want to search through. We have a sample data set in `zip` files `/data/candidates/candidates*.zip`.
@@ -40,6 +29,17 @@ python deltr.py --index --document-dir ./data/candidates --index-name resumes
 ```
 
 This will (re)index the `JSON` files under the folder `/data/candidates` in an index named `resumes`. 
+
+### Setup the features
+
+Create the features you want to use in LTR. We have created sample features in `/data/features.json`
+Next, we need to upload these features to ElasticSearch.
+
+```bash
+python deltr.py --prepare --feature-set-file ./data/features.json --feature-set-name w3c
+```
+
+This will upload the features defined in `/data/features.json` in ElasticSearch under the name `w3c`.
 
 ### Train the model
 

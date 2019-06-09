@@ -113,4 +113,4 @@ This library was developed by [Ivan Kitanovski](http://ivankitanovski.com/) base
 You can also see:
 - [DELTR Python library](https://github.com/fair-search/fairsearch-deltr-python)
 - [DELTR Java library](https://github.com/fair-search/fairsearch-deltr-java) 
-- [Fair Search Elasticsearch plugin](https://github.com/fair-search/fairsearch-fair-for-elasticsearch)
+- [FA*IR plug-in for ElasticSearch](https://github.com/fair-search/fairsearch-fair-for-elasticsearch)

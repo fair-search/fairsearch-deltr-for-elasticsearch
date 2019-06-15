@@ -13,11 +13,24 @@ This library requires:
 - `Python 3.4+`
     - `Python` dependencies are stored in the `requirements.txt` file 
 - `ElasticSearch` and _Learning to rank plugin_ (LTR) for `ElasticSearch`
-    - Start a for supported version of `ElasticSarch` and follow the [installation steps](https://github.com/o19s/elasticsearch-learning-to-rank#installing)  
+    - Start a supported version of `ElasticSearch` and follow the [installation steps](https://github.com/o19s/elasticsearch-learning-to-rank#installing)  
 
 ## Usage
 
-There are several steps you need to take.
+There are several steps you need to take. In the following, we describe how to use the adapter to search on a collection of e-mails from W3C, included in /data/, which is one of the examples we used in the paper (see bibliography below).
+
+### Index the training corpus
+
+Index the training corpus. We have a sample data set in `zip` files `/data/candidates/candidates*.zip`.
+Make sure to unzip them first. Then, you can index them with:
+
+```bash
+python deltr.py --index --document-dir ./data/candidates --index-name resumes
+```
+
+This will (re)index the `JSON` files under the folder `/data/candidates` in an index named `resumes`. 
+
+Later, at any point, you can add the real documents over which you want to search using the trained ranking model. Those documents do not need to be in the same index, most commonly they will be in a different index.
 
 ### Setup the features
 
@@ -29,17 +42,6 @@ python deltr.py --prepare --feature-set-file ./data/features.json --feature-set-
 ```
 
 This will upload the features defined in `/data/features.json` in ElasticSearch under the name `w3c`.
-
-### Index the data
-
-Index the data you want to search through. We have a sample data set in `zip` files `/data/candidates/candidates*.zip`.
-Make sure to unzip them first. Then, you can index them with:
-
-```bash
-python deltr.py --index --document-dir ./data/candidates --index-name resumes
-```
-
-This will (re)index the `JSON` files under the folder `/data/candidates` in an index named `resumes`. 
 
 ### Train the model
 
@@ -54,7 +56,7 @@ python deltr.py --train --queries ./data/queries.csv --judgements ./data/judgeme
 This is going to train a DELTR model (with default parameters) name `deltr_vanilla` using the questions in `/data/queries.csv` and 
 judgements for those queries in `/data/judgements.csv`, with the features defined in the feature set name `w3c`
 
-#### In case you want to debug
+#### Debugging the model by observing the feature values
 
 The library will use the features we defined in LTR to train the model. So, for debugging purposes, the library 
 creates a `features.csv` file in the same folder where this is executed. There you can see what features were generated for each document.
@@ -101,12 +103,16 @@ python deltr.py --help
 
 The DELTR algorithm is described in this paper:
 
-* Zehlike, Meike, and Carlos Castillo. "[Reducing Disparate Exposure in Ranking:
-A Learning to Rank Approach](https://doi.org/10.1145/3132847.3132938)." arXiv preprint arXiv:1805.08716 (2018).
+* Meike Zehlike, Gina-Theresa Diehn, Carlos Castillo. "[Reducing Disparate Exposure in Ranking:
+A Learning to Rank Approach](https://doi.org/10.1145/3132847.3132938)." preprint arXiv:1805.08716 (2018).
 
-This library was developed by [Ivan Kitanovski](http://ivankitanovski.com/) based on the paper. See the [license](https://github.com/fair-search/fairsearch-deltr-for-elasticsearch/blob/master/LICENSE) file for more information.
+This library was developed by [Ivan Kitanovski](http://ivankitanovski.com/) based on the paper. See the [license](https://github.com/fair-search/fairsearch-deltr-for-elasticsearch/blob/master/LICENSE) file for more information. 
+
+For any questions contact [Mieke Zehlike](https://de.linkedin.com/in/meike-zehlike-366bba131).
 
 ## See also
 
-You can also see the [DELTR Python library](https://github.com/fair-search/fairsearchdeltr-python)
- and [DELTR Java library](https://github.com/fair-search/fairsearchdeltr-java).
+You can also see:
+- [DELTR Python library](https://github.com/fair-search/fairsearch-deltr-python)
+- [DELTR Java library](https://github.com/fair-search/fairsearch-deltr-java) 
+- [FA*IR plug-in for ElasticSearch](https://github.com/fair-search/fairsearch-fair-for-elasticsearch)

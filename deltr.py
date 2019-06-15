@@ -6,7 +6,7 @@ from prepare import load_features, init_default_store
 from search import ltr_query
 from train import save_model, train_model, collect_train_data
 from utils import Logger, elastic_connection, FEATURE_SET_FILE, JUDGMENTS_FILE, QUERIES_FILE, \
-    FEATURE_SET_NAME, MODEL_FILE, INDEX_NAME, DOCUMENT_DIR, MODEL_NAME, FEATURES_FILE
+    FEATURE_SET_NAME, MODEL_FILE, INDEX_NAME, DOCUMENT_DIR, MODEL_NAME, FEATURES_FILE, TRAIN_LOG_FILE
 
 
 def index(index_name, document_dir):
@@ -34,14 +34,14 @@ def prepare(feature_set_file, feature_set_name):
 def train(feature_set_name: str, model_name: str, queries_file: str, judgments_file: str, index_name:str,
           features_file: str, model_output: str,
           protected_feature_name="1", gamma=1, number_of_iterations=3000, learning_rate=0.001,
-          lambdaa=0.001, init_var=0.01, standardize=False):
+          lambdaa=0.001, init_var=0.01, standardize=False, log=None):
     """
     Train and upload model with specified parameters
     """
     es = elastic_connection(timeout=1000)
     collect_train_data(es, queries_file, judgments_file, feature_set_name, index_name, features_file)
     train_model(features_file, model_output, protected_feature_name, gamma,
-                number_of_iterations, learning_rate, lambdaa, init_var, standardize)
+                number_of_iterations, learning_rate, lambdaa, init_var, standardize, log)
 
     save_model(model_name, feature_set_name, model_output)
 
@@ -103,6 +103,9 @@ if __name__ == "__main__":
     parser.add_argument('--judgements', required=False, default=JUDGMENTS_FILE,
                         help='The file path with the train judgements.')
 
+    parser.add_argument('--log', required=False, default=TRAIN_LOG_FILE,
+                        help='The name of the file to store the train log to.')
+
     # deltr arguments
     parser.add_argument('--protected-feature', required=False, default="1",
                         help='Name of the feature that contains protected attribute.')
@@ -125,6 +128,7 @@ if __name__ == "__main__":
     parser.add_argument('-v', '--verbose', required=False, action='store_true',
                         help='Show verbose output in search')
 
+
     # parse the arguments
     args = None
     try:
@@ -143,7 +147,7 @@ if __name__ == "__main__":
               args.judgements, args.index_name, args.features_log_file,
               args.model_file,
               args.protected_feature, args.gamma, args.number_of_iterations, args.learning_rate,
-              args.lambdaa, args.init_var, args.standardize)
+              args.lambdaa, args.init_var, args.standardize, args.log)
     elif args.search:
         verbose = True if args.verbose else False
         search(args.index_name, args.query, args.model, verbose)

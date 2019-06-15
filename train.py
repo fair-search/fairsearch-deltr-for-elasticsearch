@@ -93,7 +93,7 @@ def collect_train_data(es, queries_file, judgments_file, feature_set_name, index
 
 def train_model(features_file: str, model_output: str,
                 protected_feature_name="1", gamma=1, number_of_iterations=10, learning_rate=0.001,
-                lambdaa=0.001, init_var=0.01, standardize=True):
+                lambdaa=0.001, init_var=0.01, standardize=True, log=None):
     """
     Trains the DELTR model with the specified parameters
     :param features_file:           The train file with features and judgements
@@ -106,6 +106,7 @@ def train_model(features_file: str, model_output: str,
     :param lambdaa                  regularization constant (optional)
     :param init_var                 range of values for initialization of weights (optional)
     :param standardize              boolean indicating whether the data should be standardized or not (optional)
+    :param log                      file name where the train log should be stored (optional)
     :return:
     """
 
@@ -116,10 +117,10 @@ def train_model(features_file: str, model_output: str,
     feature_names = train_data.columns.tolist()[2:-1]
 
     # find the index of the protected attribute
-    protected_feature = train_data.columns.tolist().index(protected_feature_name) - 2  # minus  for the query and doc id
+    # protected_feature = train_data.columns.tolist().index(protected_feature_name) - 2  # minus  for the query and doc id
 
     # create the Deltr object
-    dtr = Deltr(protected_feature, gamma, number_of_iterations, learning_rate, lambdaa, init_var, standardize)
+    dtr = Deltr(protected_feature_name, gamma, number_of_iterations, learning_rate, lambdaa, init_var, standardize)
 
     Logger.logger.info("*** Training...")
     model = dtr.train(train_data)
@@ -129,6 +130,16 @@ def train_model(features_file: str, model_output: str,
     with(open(model_output, 'w')) as f:
         json.dump(dict(zip(feature_names, model)), f)
     Logger.logger.info("*** Done saving model")
+
+    if log:
+        Logger.logger.info("*** Saving log")
+        with(open(log, 'w')) as f:
+            json.dump([{"timestamp":l.timestamp,
+                       "omega":l.omega.tolist(),
+                       "omega_gradient":l.omega_gradient.tolist(),
+                       "loss_standard":l.loss_standard,
+                       "loss_exposure": l.loss_exposure} for l in dtr.log], f)
+        Logger.logger.info("*** Done saving log")
 
 
 def save_model(script_name, feature_set, model_fname):

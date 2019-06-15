@@ -45,7 +45,7 @@ This will (re)index the `JSON` files under the folder `/data/candidates` in an i
 
 After, we have defined and uploaded the features and indexed the data, we can now create a model to use for retrireval.
 In order to build a DELTR model, we need to provide it with some training data. We have created a sample train set contained in two files:
- `/data/queries.csv` and `/data/judgements.csv`. You can run the model
+ `/data/queries.csv` and `/data/judgements.csv`. You can train a model with:
  
 ```bash
 python deltr.py --train --queries ./data/queries.csv --judgements ./data/judgements.csv --model deltr_vanilla --feature-set-name w3c

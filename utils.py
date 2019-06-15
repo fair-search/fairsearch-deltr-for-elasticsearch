@@ -27,6 +27,7 @@ MODEL_FILE = config[config_set]['ModelFile']
 FEATURES_FILE = config[config_set]['FeaturesFile']
 MODEL_NAME = config[config_set]['ModelName']
 DOCUMENT_DIR = config[config_set]['DocumentDir']
+TRAIN_LOG_FILE = config[config_set]['TrainLogFile']
 
 
 def elastic_connection(url=None, timeout=1000, http_auth=auth):
